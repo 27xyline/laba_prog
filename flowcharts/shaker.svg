@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="654" viewBox="0 0 860 654">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#222" /></marker></defs>
+<rect width="100%" height="100%" fill="#ffffff" />
+<text x="430.0" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#111">Шейкерная сортировка</text>
+<rect x="230" y="58" width="400" height="56" rx="20" fill="#f8fbff" stroke="#1f4e79" stroke-width="1.5" />
+<text x="430.0" y="91.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#111">Начало</text>
+<rect x="230" y="142" width="400" height="56" rx="6" fill="#f8fbff" stroke="#1f4e79" stroke-width="1.5" />
+<text x="430.0" y="175.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#111">Задать левую и правую границы</text>
+<line x1="430.0" y1="114" x2="430.0" y2="142" stroke="#222" stroke-width="1.4" marker-end="url(#arrow)" />
+<rect x="230" y="226" width="400" height="56" rx="6" fill="#f8fbff" stroke="#1f4e79" stroke-width="1.5" />
+<text x="430.0" y="259.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#111">Прямой проход переносит максимум вправо</text>
+<line x1="430.0" y1="198" x2="430.0" y2="226" stroke="#222" stroke-width="1.4" marker-end="url(#arrow)" />
+<rect x="230" y="310" width="400" height="56" rx="6" fill="#f8fbff" stroke="#1f4e79" stroke-width="1.5" />
+<text x="430.0" y="343.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#111">Если обменов не было, завершить сортировку</text>
+<line x1="430.0" y1="282" x2="430.0" y2="310" stroke="#222" stroke-width="1.4" marker-end="url(#arrow)" />
+<rect x="230" y="394" width="400" height="56" rx="6" fill="#f8fbff" stroke="#1f4e79" stroke-width="1.5" />
+<text x="430.0" y="427.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#111">Обратный проход переносит минимум влево</text>
+<line x1="430.0" y1="366" x2="430.0" y2="394" stroke="#222" stroke-width="1.4" marker-end="url(#arrow)" />
+<rect x="230" y="478" width="400" height="56" rx="6" fill="#f8fbff" stroke="#1f4e79" stroke-width="1.5" />
+<text x="430.0" y="511.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#111">Сузить границы диапазона</text>
+<line x1="430.0" y1="450" x2="430.0" y2="478" stroke="#222" stroke-width="1.4" marker-end="url(#arrow)" />
+<rect x="230" y="562" width="400" height="56" rx="20" fill="#f8fbff" stroke="#1f4e79" stroke-width="1.5" />
+<text x="430.0" y="595.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#111">Конец</text>
+<line x1="430.0" y1="534" x2="430.0" y2="562" stroke="#222" stroke-width="1.4" marker-end="url(#arrow)" />
+</svg>
