@@ -125,19 +125,55 @@ $ n in {10, 100, 500, 1000, 2000, 5000, 10000}. $
 
 == Графики результатов экспериментов
 
+=== Время работы
+
 #figure(
-  image("graphics/time.png", width: 100%),
-  caption: [Время работы алгоритмов при различных типах исходных данных],
+  image("graphics/time_random.png", width: 85%),
+  caption: [Время работы алгоритмов на случайных данных],
 )
 
 #figure(
-  image("graphics/comparisons.png", width: 100%),
-  caption: [Количество сравнений элементов при различных типах исходных данных],
+  image("graphics/time_nearly_sorted.png", width: 85%),
+  caption: [Время работы алгоритмов на почти отсортированных данных],
 )
 
 #figure(
-  image("graphics/swaps.png", width: 100%),
-  caption: [Количество обменов элементов при различных типах исходных данных],
+  image("graphics/time_reversed.png", width: 85%),
+  caption: [Время работы алгоритмов на данных в обратном порядке],
+)
+
+=== Количество сравнений элементов
+
+#figure(
+  image("graphics/comparisons_random.png", width: 85%),
+  caption: [Количество сравнений на случайных данных],
+)
+
+#figure(
+  image("graphics/comparisons_nearly_sorted.png", width: 85%),
+  caption: [Количество сравнений на почти отсортированных данных],
+)
+
+#figure(
+  image("graphics/comparisons_reversed.png", width: 85%),
+  caption: [Количество сравнений на данных в обратном порядке],
+)
+
+=== Количество обменов элементов
+
+#figure(
+  image("graphics/swaps_random.png", width: 85%),
+  caption: [Количество обменов на случайных данных],
+)
+
+#figure(
+  image("graphics/swaps_nearly_sorted.png", width: 85%),
+  caption: [Количество обменов на почти отсортированных данных],
+)
+
+#figure(
+  image("graphics/swaps_reversed.png", width: 85%),
+  caption: [Количество обменов на данных в обратном порядке],
 )
 
 
