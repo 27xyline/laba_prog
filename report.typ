@@ -87,14 +87,14 @@ $ n in {10, 100, 500, 1000, 2000, 5000, 10000}. $
 
 В этом разделе приведены подробные блок-схемы реализованных сортировок и укрупнённая блок-схема основной программы.
 
-== Пузырьковая сортировка с флагом
+= Пузырьковая сортировка с флагом
 
 #figure(
-  image("block_diagrams/bubble_flagged_flowchart.png", width: 86%),
+  image("block_diagrams/bubble_flagged_flowchart.png", width: 60%),
   caption: [Блок-схема пузырьковой сортировки с флагом],
 )
 
-== Шейкерная сортировка
+= Шейкерная сортировка
 
 #figure(
   image("block_diagrams/shaker_flowchart.png", width: 86%),
