@@ -123,56 +123,23 @@ $ n in {10, 100, 500, 1000, 2000, 5000, 10000}. $
 
 #include "results_table.typ"
 
-== Графики времени работы
+== Графики результатов экспериментов
 
 #figure(
-  image("graphics/time_random.png", width: 92%),
-  caption: [Время работы на случайных данных],
+  image("graphics/time.png", width: 100%),
+  caption: [Время работы алгоритмов при различных типах исходных данных],
 )
 
 #figure(
-  image("graphics/time_nearly_sorted.png", width: 92%),
-  caption: [Время работы на почти отсортированных данных],
+  image("graphics/comparisons.png", width: 100%),
+  caption: [Количество сравнений элементов при различных типах исходных данных],
 )
 
 #figure(
-  image("graphics/time_reversed.png", width: 92%),
-  caption: [Время работы на данных в обратном порядке],
+  image("graphics/swaps.png", width: 100%),
+  caption: [Количество обменов элементов при различных типах исходных данных],
 )
 
-== Графики количества сравнений
-
-#figure(
-  image("graphics/comparisons_random.png", width: 92%),
-  caption: [Количество сравнений на случайных данных],
-)
-
-#figure(
-  image("graphics/comparisons_nearly_sorted.png", width: 92%),
-  caption: [Количество сравнений на почти отсортированных данных],
-)
-
-#figure(
-  image("graphics/comparisons_reversed.png", width: 92%),
-  caption: [Количество сравнений на данных в обратном порядке],
-)
-
-== Графики количества обменов
-
-#figure(
-  image("graphics/swaps_random.png", width: 92%),
-  caption: [Количество обменов на случайных данных],
-)
-
-#figure(
-  image("graphics/swaps_nearly_sorted.png", width: 92%),
-  caption: [Количество обменов на почти отсортированных данных],
-)
-
-#figure(
-  image("graphics/swaps_reversed.png", width: 92%),
-  caption: [Количество обменов на данных в обратном порядке],
-)
 
 = Анализ результатов
 
@@ -194,4 +161,9 @@ $ n in {10, 100, 500, 1000, 2000, 5000, 10000}. $
 
 = Приложение. Исходный код программы
 
-#raw(read("quadratic_sorts.cpp"), lang: "cpp", block: true)
+#show figure.where(kind: raw): set block(breakable: true)
+
+#figure(
+  raw(read("quadratic_sorts.cpp"), lang: "cpp", block: true),
+  caption: [Исходный код программы для проведения экспериментов],
+) <listing-code>

@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 ROOT = Path(__file__).resolve().parent
-OUT_DIR = ROOT / "variant" / "flowcharts"
+OUT_DIR = ROOT / "block_diagrams"
 WIDTH = 1200
 HEIGHT = 1700
 

@@ -11,7 +11,7 @@ TABLE_PATH = ROOT / "results_table.typ"
 
 WIDTH = 1800
 HEIGHT = 1080
-MARGIN_LEFT = 170
+MARGIN_LEFT = 240
 MARGIN_RIGHT = 70
 MARGIN_TOP = 180
 MARGIN_BOTTOM = 135
@@ -55,10 +55,11 @@ def font(size, bold=False):
     return ImageFont.load_default()
 
 
-FONT_TITLE = font(38, bold=True)
-FONT_TEXT = font(25)
-FONT_SMALL = font(21)
-FONT_TINY = font(18)
+FONT_TITLE = font(36, bold=True)
+FONT_SUBTITLE = font(24, bold=True)
+FONT_TEXT = font(22)
+FONT_SMALL = font(17)
+FONT_TINY = font(15)
 
 
 def read_csv(path):
@@ -132,51 +133,87 @@ def draw_line_chart(rows, metric, ylabel, output_name):
 
     GRAPHICS_DIR.mkdir(exist_ok=True)
 
-    for data_type in ordered_values(rows, "DataType", DATA_TYPE_ORDER):
-        image = Image.new("RGB", (WIDTH, HEIGHT), BACKGROUND)
-        draw = ImageDraw.Draw(image)
+    # Canvas dimensions
+    W = 2400
+    H = 850
+    T_margin = 160
+    B_margin = 140
+    W_sub = 600
+    H_sub = 550
+    Spacing = 150
+    L_margin = 150
 
-        plot_left = MARGIN_LEFT
-        plot_top = MARGIN_TOP
-        plot_right = WIDTH - MARGIN_RIGHT
-        plot_bottom = HEIGHT - MARGIN_BOTTOM
-        plot_width = plot_right - plot_left
-        plot_height = plot_bottom - plot_top
+    image = Image.new("RGB", (W, H), BACKGROUND)
+    draw = ImageDraw.Draw(image)
 
-        title = f"{ylabel}: {DATA_TYPE_LABELS[data_type]}"
-        draw_text_centered(draw, (WIDTH // 2, 58), title, TEXT_COLOR, FONT_TITLE)
+    # 1. Main Title
+    draw_text_centered(draw, (W // 2, 50), ylabel, TEXT_COLOR, FONT_TITLE)
+
+    # 2. Main Legend
+    legend_items = ordered_values(rows, "Algorithm", ALGORITHM_ORDER)
+    legend_width = 0
+    item_sizes = []
+    for algorithm in legend_items:
+        text = ALGORITHM_LABELS[algorithm]
+        bbox = draw.textbbox((0, 0), text, font=FONT_TEXT)
+        width = 60 + (bbox[2] - bbox[0]) + 40
+        item_sizes.append(width)
+        legend_width += width
+    legend_x = (W - legend_width) / 2
+    legend_y = 105
+    for index, algorithm in enumerate(legend_items):
+        color = COLORS[algorithm]
+        x0 = legend_x + sum(item_sizes[:index])
+        draw.line((x0, legend_y, x0 + 40, legend_y), fill=color, width=5)
+        draw.ellipse((x0 + 15, legend_y - 7, x0 + 25, legend_y + 7), fill=color, outline="white", width=3)
+        draw.text((x0 + 55, legend_y), ALGORITHM_LABELS[algorithm], fill=TEXT_COLOR, font=FONT_TEXT, anchor="lm")
+
+    # 3. Draw Subplots
+    for col_idx, data_type in enumerate(ordered_values(rows, "DataType", DATA_TYPE_ORDER)):
+        plot_left = L_margin + col_idx * (W_sub + Spacing)
+        plot_right = plot_left + W_sub
+        plot_top = T_margin
+        plot_bottom = plot_top + H_sub
+
+        # Subplot Title (e.g. "а) Случайные данные")
+        subplot_letters = ["а", "б", "в"]
+        subplot_title = f"{subplot_letters[col_idx]}) {DATA_TYPE_LABELS[data_type].capitalize()}"
+        draw_text_centered(draw, ((plot_left + plot_right) // 2, plot_top - 25), subplot_title, TEXT_COLOR, FONT_SUBTITLE)
 
         filtered = [row for row in rows if row["DataType"] == data_type]
         max_y = max(row[metric] for row in filtered)
         ticks = nice_ticks(max_y)
         max_tick = max(ticks)
 
+        # Grid lines (horizontal)
         for tick in ticks:
-            y = plot_bottom - (tick / max_tick) * plot_height if max_tick else plot_bottom
+            y = plot_bottom - (tick / max_tick) * H_sub if max_tick else plot_bottom
             draw.line((plot_left, y, plot_right, y), fill=GRID_COLOR, width=2)
 
+        # Grid lines (vertical)
         for size in x_values:
-            x = x_position(size, x_values, plot_left, plot_width)
+            x = x_position(size, x_values, plot_left, W_sub)
             draw.line((x, plot_top, x, plot_bottom), fill="#f0f2f6", width=1)
 
+        # Axes
         draw.line((plot_left, plot_bottom, plot_right, plot_bottom), fill=AXIS_COLOR, width=3)
         draw.line((plot_left, plot_top, plot_left, plot_bottom), fill=AXIS_COLOR, width=3)
         draw.line((plot_right, plot_top, plot_right, plot_bottom), fill="#d8dde6", width=1)
         draw.line((plot_left, plot_top, plot_right, plot_top), fill="#d8dde6", width=1)
 
+        # Y-ticks and labels
         for tick in ticks:
-            y = plot_bottom - (tick / max_tick) * plot_height if max_tick else plot_bottom
+            y = plot_bottom - (tick / max_tick) * H_sub if max_tick else plot_bottom
             draw.line((plot_left - 8, y, plot_left, y), fill=AXIS_COLOR, width=2)
-            draw.text((plot_left - 16, y), format_number(tick), fill=TEXT_COLOR, font=FONT_SMALL, anchor="rm")
+            draw.text((plot_left - 12, y), format_number(tick), fill=TEXT_COLOR, font=FONT_SMALL, anchor="rm")
 
+        # X-ticks and labels
         for size in x_values:
-            x = x_position(size, x_values, plot_left, plot_width)
-            draw.line((x, plot_bottom, x, plot_bottom + 10), fill=AXIS_COLOR, width=2)
-            draw.text((x, plot_bottom + 22), format_number(size), fill=TEXT_COLOR, font=FONT_SMALL, anchor="ma")
+            x = x_position(size, x_values, plot_left, W_sub)
+            draw.line((x, plot_bottom, x, plot_bottom + 8), fill=AXIS_COLOR, width=2)
+            draw.text((x, plot_bottom + 18), format_number(size), fill=TEXT_COLOR, font=FONT_SMALL, anchor="ma")
 
-        draw_text_centered(draw, ((plot_left + plot_right) / 2, HEIGHT - 52), "Размер массива n", TEXT_COLOR, FONT_TEXT)
-        draw_rotated_label(image, ylabel, (58, (plot_top + plot_bottom) / 2), FONT_TEXT, TEXT_COLOR)
-
+        # Plot data lines
         for algorithm in ordered_values(rows, "Algorithm", ALGORITHM_ORDER):
             points = [
                 row
@@ -187,36 +224,21 @@ def draw_line_chart(rows, metric, ylabel, output_name):
 
             coords = []
             for row in points:
-                x = x_position(row["Size"], x_values, plot_left, plot_width)
-                y = plot_bottom - (row[metric] / max_tick) * plot_height if max_tick else plot_bottom
+                x = x_position(row["Size"], x_values, plot_left, W_sub)
+                y = plot_bottom - (row[metric] / max_tick) * H_sub if max_tick else plot_bottom
                 coords.append((x, y))
 
             color = COLORS[algorithm]
-            draw.line(coords, fill=color, width=5, joint="curve")
+            draw.line(coords, fill=color, width=4, joint="curve")
             for x, y in coords:
-                draw.ellipse((x - 7, y - 7, x + 7, y + 7), fill=color, outline="white", width=3)
+                draw.ellipse((x - 6, y - 6, x + 6, y + 6), fill=color, outline="white", width=2)
 
-        legend_items = ordered_values(rows, "Algorithm", ALGORITHM_ORDER)
-        legend_width = 0
-        item_sizes = []
-        for algorithm in legend_items:
-            text = ALGORITHM_LABELS[algorithm]
-            bbox = draw.textbbox((0, 0), text, font=FONT_SMALL)
-            width = 52 + (bbox[2] - bbox[0]) + 38
-            item_sizes.append(width)
-            legend_width += width
-        legend_x = (WIDTH - legend_width) / 2
-        legend_y = 112
-        for index, algorithm in enumerate(legend_items):
-            color = COLORS[algorithm]
-            x0 = legend_x + sum(item_sizes[:index])
-            draw.line((x0, legend_y, x0 + 36, legend_y), fill=color, width=5)
-            draw.ellipse((x0 + 14, legend_y - 7, x0 + 28, legend_y + 7), fill=color, outline="white", width=3)
-            draw.text((x0 + 50, legend_y), ALGORITHM_LABELS[algorithm], fill=TEXT_COLOR, font=FONT_SMALL, anchor="lm")
+    # 4. Common Bottom Labels
+    draw_text_centered(draw, (W // 2, H - 40), "Размер массива n", TEXT_COLOR, FONT_TEXT)
+    note = "Шкала размера массива логарифмическая"
+    draw.text((W - 60, H - 40), note, fill="#6b7280", font=FONT_TINY, anchor="rm")
 
-        note = "Шкала размера массива логарифмическая"
-        draw.text((plot_right, HEIGHT - 52), note, fill="#6b7280", font=FONT_TINY, anchor="rm")
-        image.save(GRAPHICS_DIR / f"{output_name}_{data_type}.png")
+    image.save(GRAPHICS_DIR / f"{output_name}.png")
 
 
 def typst_cell(value):
