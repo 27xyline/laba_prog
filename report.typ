@@ -1,11 +1,12 @@
 #set document(title: "Лабораторная работа: Алгоритмы квадратичной сортировки и анализ эффективности")
 #set page(margin: 2cm)
-#set text(font: "Times New Roman", size: 14pt, lang: "ru")
+#set text(font: "Times New Roman", lang: "ru")
 #set heading(numbering: "1.")
 
 #import "@preview/modern-g7-32:0.2.0": gost
 
 #show: gost.with(
+  text-size: (default: 14pt, small: 14pt),
 ministry: "Министерство науки и высшего образования Российской Федерации
 Федеральное государственное автономное образовательное
 учреждение высшего образования
@@ -104,14 +105,14 @@ $ n in {10, 100, 500, 1000, 2000, 5000, 10000}. $
 = Шейкерная сортировка
 
 #figure(
-  image("block_diagrams/shaker_flowchart.png", width: 84%),
+  image("block_diagrams/shaker_flowchart.png", width: 90%),
   caption: [Блок-схема шейкерной сортировки],
 )
 
 == Сортировка чёт-нечет
 
 #figure(
-  image("block_diagrams/odd_even_flowchart.png", width: 86%),
+  image("block_diagrams/odd_even_flowchart.png", width: 90%),
   caption: [Блок-схема сортировки чёт-нечет],
 )
 
