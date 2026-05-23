@@ -6,19 +6,22 @@
 #import "@preview/modern-g7-32:0.2.0": gost
 
 #show: gost.with(
-  ministry: "Министерство науки и высшего образования Российской Федерации
-Федеральное государственное автономное образовательное
-учреждение высшего образования
-",
+  ministry: "МИНОБРНАУКИ РОССИИ",
   organization: (
-    full: "«МОСКОВСКИЙ АВИАЦИОННЫЙ ИНСТИТУТ
-(НАЦИОНАЛЬНЫЙ ИССЛЕДОВАТЕЛЬСКИЙ УНИВЕРСИТЕТ)»",
-    short: "МАИ",
+      full: "Московский авиационный институт",
+      short: "МАИ"
   ),
-  about: "О лабораторной работе",
+
+  report-type: "Отчёт",
+  about: "о лабораторной работе",
   subject: "Алгоритмы квадратичной сортировки и анализ эффективности",
-  manager: (name: "Павлов О.В.", position: "Ст. преподаватель", title: "Руководитель,"),
+  bare-subject: false,
   city: "Москва",
+  year: 2026,
+  performers: (
+    (name: "Павлов О.В.", position: "Преподаватель"),
+    (name: "Садунян Р.К.", position: "Студент группы М3О-113БВ-25"),
+  )
 )
 
 #pagebreak()
@@ -90,14 +93,14 @@ $ n in {10, 100, 500, 1000, 2000, 5000, 10000}. $
 = Пузырьковая сортировка с флагом
 
 #figure(
-  image("block_diagrams/bubble_flagged_flowchart.png", width: 60%),
+  image("block_diagrams/bubble_flagged_flowchart.png", width: 100%),
   caption: [Блок-схема пузырьковой сортировки с флагом],
 )
 
 = Шейкерная сортировка
 
 #figure(
-  image("block_diagrams/shaker_flowchart.png", width: 86%),
+  image("block_diagrams/shaker_flowchart.png", width: 84%),
   caption: [Блок-схема шейкерной сортировки],
 )
 
@@ -111,7 +114,7 @@ $ n in {10, 100, 500, 1000, 2000, 5000, 10000}. $
 == Основная программа
 
 #figure(
-  image("block_diagrams/main_program_flowchart.png", width: 86%),
+  image("block_diagrams/main_program_flowchart.png", width: 67%),
   caption: [Укрупнённая блок-схема основной программы],
 )
 
