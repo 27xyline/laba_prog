@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <chrono>
-#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <random>
@@ -15,40 +14,26 @@ struct Stats {
     long long time_us = 0;
 };
 
-enum class DataType {
+enum DataType {
     Random,
     NearlySorted,
     Reversed
 };
 
-enum class Algorithm {
+enum Algorithm {
     BubbleFlagged,
     Shaker,
     OddEven
 };
 
 string toString(DataType type) {
-    switch (type) {
-        case DataType::Random:
-            return "random";
-        case DataType::NearlySorted:
-            return "nearly_sorted";
-        case DataType::Reversed:
-            return "reversed";
-    }
-    return "";
+    const string names[] = {"random", "nearly_sorted", "reversed"};
+    return names[type];
 }
 
 string toString(Algorithm algorithm) {
-    switch (algorithm) {
-        case Algorithm::BubbleFlagged:
-            return "bubble_flagged";
-        case Algorithm::Shaker:
-            return "shaker";
-        case Algorithm::OddEven:
-            return "odd_even";
-    }
-    return "";
+    const string names[] = {"bubble_flagged", "shaker", "odd_even"};
+    return names[algorithm];
 }
 
 vector<int> generateData(size_t n, DataType type, mt19937& rng) {
@@ -59,11 +44,11 @@ vector<int> generateData(size_t n, DataType type, mt19937& rng) {
         data[i] = valueDist(rng);
     }
 
-    if (type == DataType::NearlySorted || type == DataType::Reversed) {
+    if (type == NearlySorted || type == Reversed) {
         sort(data.begin(), data.end());
     }
 
-    if (type == DataType::NearlySorted && n > 1) {
+    if (type == NearlySorted && n > 1) {
         uniform_int_distribution<size_t> indexDist(0, n - 1);
         const size_t swapCount = max<size_t>(1, n / 10);
 
@@ -72,7 +57,7 @@ vector<int> generateData(size_t n, DataType type, mt19937& rng) {
             const size_t right = indexDist(rng);
             swap(data[left], data[right]);
         }
-    } else if (type == DataType::Reversed) {
+    } else if (type == Reversed) {
         reverse(data.begin(), data.end());
     }
 
@@ -173,20 +158,19 @@ bool isSortedAscending(const vector<int>& data) {
 }
 
 Stats runSort(const vector<int>& source, Algorithm algorithm) {
-    vector<int> working(source.size());
-    memcpy(working.data(), source.data(), source.size() * sizeof(int));
+    vector<int> working = source;
 
     Stats stats;
     const auto start = chrono::high_resolution_clock::now();
 
     switch (algorithm) {
-        case Algorithm::BubbleFlagged:
+        case BubbleFlagged:
             bubbleFlagged(working.data(), working.size(), stats);
             break;
-        case Algorithm::Shaker:
+        case Shaker:
             shakerSort(working.data(), working.size(), stats);
             break;
-        case Algorithm::OddEven:
+        case OddEven:
             oddEvenSort(working.data(), working.size(), stats);
             break;
     }
@@ -204,16 +188,8 @@ Stats runSort(const vector<int>& source, Algorithm algorithm) {
 
 int main() {
     const vector<size_t> sizes = {10, 100, 500, 1000, 2000, 5000, 10000};
-    const vector<DataType> dataTypes = {
-        DataType::Random,
-        DataType::NearlySorted,
-        DataType::Reversed
-    };
-    const vector<Algorithm> algorithms = {
-        Algorithm::BubbleFlagged,
-        Algorithm::Shaker,
-        Algorithm::OddEven
-    };
+    const vector<DataType> dataTypes = {Random, NearlySorted, Reversed};
+    const vector<Algorithm> algorithms = {BubbleFlagged, Shaker, OddEven};
 
     mt19937 rng(42);
     ofstream output("results.csv");
