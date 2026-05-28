@@ -196,7 +196,7 @@ Stats runSort(const vector<int>& source, Algorithm algorithm) {
 
     if (!isSortedAscending(working)) {
         cerr << "Ошибка: массив не отсортирован алгоритмом "
-             << toString(algorithm) << '\n';
+                << toString(algorithm) << '\n';
     }
 
     return stats;
@@ -233,16 +233,16 @@ int main() {
                 const Stats stats = runSort(source, algorithm);
 
                 output << size << ';'
-                       << toString(dataType) << ';'
-                       << toString(algorithm) << ';'
-                       << stats.comparisons << ';'
-                       << stats.swaps << ';'
-                       << stats.time_us << '\n';
+                        << toString(dataType) << ';'
+                        << toString(algorithm) << ';'
+                        << stats.comparisons << ';'
+                        << stats.swaps << ';'
+                        << stats.time_us << '\n';
 
                 cout << "n=" << size
-                     << ", type=" << toString(dataType)
-                     << ", algorithm=" << toString(algorithm)
-                     << " done\n";
+                        << ", type=" << toString(dataType)
+                        << ", algorithm=" << toString(algorithm)
+                        << " done\n";
             }
         }
     }
