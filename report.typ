@@ -98,14 +98,14 @@ $ n in {10, 100, 500, 1000, 2000, 5000, 10000}. $
 == Пузырьковая сортировка с флагом
 
 #figure(
-  image("block_diagrams/bubble_flagged_flowchart.png", width: 100%),
+  image("block_diagrams/bubble_flagged_flowchart.png", width: 45%),
   caption: [Блок-схема пузырьковой сортировки с флагом],
 )
 
 == Шейкерная сортировка
 
 #figure(
-  image("block_diagrams/shaker_flowchart.png", width: 90%),
+  image("block_diagrams/shaker_flowchart.png", width: 38%),
   caption: [Блок-схема шейкерной сортировки],
 )
 

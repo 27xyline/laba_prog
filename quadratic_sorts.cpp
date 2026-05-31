@@ -97,10 +97,6 @@ void bubbleFlagged(int* data, size_t n, Stats& stats) {
 }
 
 void shakerSort(int* data, size_t n, Stats& stats) {
-    if (n < 2) {
-        return;
-    }
-
     size_t left = 0;
     size_t right = n - 1;
     bool swapped = true;
